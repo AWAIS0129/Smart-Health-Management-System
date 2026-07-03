@@ -1,0 +1,25 @@
+{% extends "dashboard_base.html" %}
+{% block title %}
+Main Dashboard
+{% endblock title %}
+
+{% block dashboard_body %}
+ <div class="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-8">
+                    <a href="{% url 'user_accounts:profile_option' %}" class="block bg-yellow-500 hover:bg-yellow-600 text-white font-semibold text-xl py-8 rounded-lg shadow-lg text-center transiion">
+                        My Profile
+                    </a>
+                    <a href="{% url 'health_data_manager:operations' %}" class="block bg-blue-500 hover:bg-blue-600 text-white font-semibold text-xl py-8 rounded-lg shadow-lg text-center transiion">
+                        Manage Health Data
+                    </a>
+                    <a href="{% url 'data_visualization:visualization_type' %}" class="block bg-red-500 hover:bg-red-600 text-white font-semibold text-xl py-8 rounded-lg shadow-lg text-center transition">
+                        View My Data
+                    </a>
+                    <a href="{% url 'report_engine:home' %}" class="block bg-green-500 hover:bg-green-600 text-white font-semibold text-xl py-8 rounded-lg shadow-lg text-center transition">
+                        Generate A Report
+                    </a>
+                    <a href="{% url 'ai_engine:home' %}" class="block bg-pink-500 hover:bg-pink-600 text-white font-semibold text-xl py-8 rounded-lg shadow-lg text-center transition">
+                        AI Analysis
+                    </a>
+             
+                </div>
+{% endblock dashboard_body %}

@@ -1,0 +1,141 @@
+{% extends "dashboard_base.html" %}
+
+{% block dashboard_body %}
+
+<div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+
+    
+    {% if notification.priority == 'CRITICAL' %}
+    <div class="bg-red-50 px-6 py-4 border-b border-red-200">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">🚨</span>
+                <h2 class="text-xl font-bold text-gray-900">Critical Alert</h2>
+            </div>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-800">
+                Critical Priority
+            </span>
+        </div>
+    </div>
+    
+    {% elif notification.priority == 'HIGH' %}
+    <div class="bg-orange-50 px-6 py-4 border-b border-orange-200">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">⚠️</span>
+                <h2 class="text-xl font-bold text-gray-900">High Priority Alert</h2>
+            </div>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-orange-100 text-orange-800">
+                High Priority
+            </span>
+        </div>
+    </div>
+    
+    {% elif notification.priority == 'MEDIUM' %}
+    <div class="bg-yellow-50 px-6 py-4 border-b border-yellow-200">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">📌</span>
+                <h2 class="text-xl font-bold text-gray-900">Reminder</h2>
+            </div>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-yellow-100 text-yellow-800">
+                Medium Priority
+            </span>
+        </div>
+    </div>
+    
+    {% else %}
+    <div class="bg-green-50 px-6 py-4 border-b border-green-200">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">ℹ️</span>
+                <h2 class="text-xl font-bold text-gray-900">Information</h2>
+            </div>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
+                Low Priority
+            </span>
+        </div>
+    </div>
+    {% endif %}
+
+
+
+
+    
+    <div class="p-6 space-y-6">
+        <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Title</label>
+            <h3 class="text-2xl font-bold text-gray-900">{{ notification.title }}</h3>
+        </div>
+        
+        <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Message</label>
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-5">
+                <p class="text-gray-800 text-base leading-relaxed">
+                    {{ notification.message }}
+                </p>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-gray-200">
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Status</label>
+                {% if notification.is_read %}
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-200 text-gray-600">
+                    ✓ Read
+                </span>
+                {% else %}
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-700">
+                    ● Unread
+                </span>
+                {% endif %}
+            </div>
+            
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Channel</label>
+                <p class="text-gray-900 text-sm font-medium">
+                    {% if notification.channel == 'APP' %}
+                        In-App Only
+                    {% elif notification.channel == 'EMAIL' %}
+                        Email
+                    {% elif notification.channel == 'ALL' %}
+                        All Channels
+                    {% else %}
+                        {{ notification.channel }}
+                    {% endif %}
+                </p>
+            </div>
+            
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Created</label>
+                <p class="text-gray-900 text-sm font-medium">
+                    {{ notification.created_at|date:"F d, Y - H:i" }}
+                </p>
+            </div>
+            
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-gray-500 mb-2">Expires</label>
+                <p class="text-gray-900 text-sm font-medium">
+                    {% if notification.expires_at %}
+                        {{ notification.expires_at|date:"F d, Y - H:i" }}
+                    {% else %}
+                        Never
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    
+
+    
+    <div class="bg-gray-50 px-6 py-4 border-t border-gray-200 flex items-center justify-end gap-3">
+        <a href="{% url 'notifications:home' %}" 
+           class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+            ← Go Back
+        </a>
+    </div>
+</div>
+
+{% endblock dashboard_body %}
+
+

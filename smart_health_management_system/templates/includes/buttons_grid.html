@@ -1,0 +1,52 @@
+{# Reusable buttons grid component for health parameters #}
+{# Usage: {% include "includes/buttons_grid.html" with url_namespace="health_data_manager" %} #}
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <a href="{% url url_namespace|add:':BP' %}"
+       class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 px-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+       aria-label="Blood Pressure data entry">
+        BP
+    </a>
+    
+    <a href="{% url url_namespace|add:':weight' %}"
+       class="flex items-center justify-center bg-purple-500 hover:bg-purple-600 text-white font-semibold py-4 px-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+       aria-label="Weight data entry">
+        Weight
+    </a>
+    
+    <a href="{% url url_namespace|add:':blood_sugar' %}"
+       class="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white font-semibold py-4 px-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+       aria-label="Blood Sugar data entry">
+        Sugar
+    </a>
+    
+    <a href="{% url url_namespace|add:':temperature' %}"
+       class="flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-semibold py-4 px-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
+       aria-label="Temperature data entry">
+        Temp
+    </a>
+    
+    <a href="{% url url_namespace|add:':pulse' %}"
+       class="flex items-center justify-center bg-pink-500 hover:bg-pink-600 text-white font-semibold py-4 px-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
+       aria-label="Pulse data entry">
+        Pulse
+    </a>
+    
+    <a href="{% url url_namespace|add:':exercise' %}"
+       class="flex items-center justify-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-4 px-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+       aria-label="Exercise data entry">
+        Exercise
+    </a>
+    
+    <a href="{% url url_namespace|add:':sleep' %}"
+       class="flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-4 px-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600"
+       aria-label="Sleep data entry">
+        Sleep
+    </a>
+    
+    <a href="{% url url_namespace|add:':stress' %}"
+       class="flex items-center justify-center bg-gray-600 hover:bg-gray-700 text-white font-semibold py-4 px-3 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+       aria-label="Stress level data entry">
+        Stress
+    </a>
+</div>

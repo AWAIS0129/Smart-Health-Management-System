@@ -1,0 +1,31 @@
+{# Reusable loading button component #}
+{# Usage: {% include "includes/loading_button.html" with form_id="health_form" button_text="Submit" button_color="green" %} #}
+
+<button type="submit" 
+        id="{{ form_id }}-submit"
+        class="mt-6 w-full bg-{{ button_color }}-500 hover:bg-{{ button_color }}-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-{{ button_color }}-500 disabled:opacity-50 disabled:cursor-not-allowed"
+        aria-busy="false">
+    <span class="button-text">{{ button_text }}</span>
+    <span class="button-loader hidden">
+        <span class="inline-block animate-spin">⟳</span> Processing...
+    </span>
+</button>
+
+<script>
+document.getElementById('{{ form_id }}-submit').addEventListener('click', function(e) {
+    const btn = this;
+    const textSpan = btn.querySelector('.button-text');
+    const loaderSpan = btn.querySelector('.button-loader');
+    
+    btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
+    textSpan.classList.add('hidden');
+    loaderSpan.classList.remove('hidden');
+    
+    {% comment %} Ensure form submission happens {% endcomment %}
+    const form = btn.closest('form');
+    if (form) {
+        setTimeout(() => form.submit(), 0);
+    }
+});
+</script>

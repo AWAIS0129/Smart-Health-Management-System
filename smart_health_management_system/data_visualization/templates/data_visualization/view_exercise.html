@@ -1,0 +1,54 @@
+{% extends "data_visualization/tables_home.html" %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+exercise_view_page
+{% endblock title %}
+
+
+
+
+{% block data %}
+
+
+{% block filter_form %}
+<form method="post" action="{% url "data_visualization:view_exercise" %}">
+    {% csrf_token %}
+    {{filter_form|crispy}}
+
+    <button type="submit" class="my-6 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+    Submit
+    </button>
+</form>
+{% endblock filter_form %}
+
+<table class="w-full border-collapse border border-gray-300 rounded-lg overflow-hidden shadow">
+    <thead class="bg-red-500 text-white">
+        <tr>
+            <th class="border border-gray-300 px-4 py-2 text-left">No</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Exercise Duration</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Time Unit</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Exercise Type</th>
+            <th class="border border-gray-300 px-4 py-2 text-left">Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data %}
+        <tr class="hover:bg-gray-100 transition">
+            <td class="border border-gray-300 px-4 py-2">{{ forloop.counter }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ item.exercise_duration_in_minutes }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{"Minutes"}}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ item.get_type_display }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ item.timestamp }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="border border-gray-300 px-4 py-2 text-center text-gray-500">No data available</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock data %}

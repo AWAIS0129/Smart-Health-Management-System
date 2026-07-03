@@ -1,0 +1,86 @@
+{% extends "dashboard_base.html" %}
+
+
+
+
+
+
+
+
+{% block dashboard_body %}
+
+{% if data %}
+
+<div class="w-[96%] mx-auto my-4">
+
+    
+    <div class="grid grid-cols-4 bg-red-400 font-semibold">
+        <div class="p-2">Index</div>
+        <div class="p-2">Title</div>
+        <div class="p-2">Severity</div>
+        <div class="p-2">Status</div>
+    </div>
+    
+
+    <div class="divide-y">
+    {% for notification in  data%}
+        <div class="grid grid-cols-4 hover:bg-gray-50">
+            <div class="p-2">{{forloop.counter}}</div>
+
+            <form action="{% url "notifications:mark_as_read" notification.id %}" method="POST">
+                {% csrf_token %}
+                <div class="p-2 text-blue-700"><button type="submit" class="cursor-pointer">{{notification.title}}</button></div>
+            </form>
+
+
+            {% if notification.priority == 'CRITICAL' %}
+            <div class="p-2">
+                <span class="px-3 py-1 rounded-md text-xs font-bold bg-red-500 text-white">
+                    CRITICAL
+                </span>
+            </div>
+
+
+            {% elif notification.priority == 'HIGH' %}
+            <div class="p-2">
+                <span class="px-3 py-1 rounded-md text-xs font-bold bg-orange-600 text-white">
+                    HIGH
+                </span>
+            </div>
+
+
+            {% elif notification.priority == 'MEDIUM' %}
+            <div class="p-2">
+                <span class="px-3 py-1 rounded-md text-xs font-bold bg-yellow-600 text-white">
+                    MEDIUM
+                </span>
+            </div>
+
+
+            {% else %}
+            <div class="p-2">
+                <span class="px-3 py-1 rounded-md text-xs font-bold bg-green-600 text-white">
+                    LOW
+                </span>
+            </div>
+            {% endif %}
+
+            <div class="p-2">
+                {% if notification.is_read %}
+                Read
+                {% else %}
+                Unread
+                {% endif %}
+                
+                </div>
+        </div>
+        {% endfor %}
+    </div>
+
+
+{% else %}
+
+
+{% endif %}
+
+{% endblock dashboard_body %}

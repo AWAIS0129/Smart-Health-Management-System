@@ -1,0 +1,60 @@
+{% extends "dashboard/index.html" %}
+
+{% block title %}Edit Data{% endblock title %}
+
+
+{% block dashboard_body %}
+<div class="min-h-[80%] flex justify-center items-center py-8">
+    <div class="w-[90%] max-w-5xl bg-white rounded-xl shadow-lg p-8 border-t-4 border-t-blue-600">
+        <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center capitalize">Edit your health data</h2>
+        <p class="text-gray-600 text-center mb-8">Select a health parameter to  edit your health data</p>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <a href="{% url 'health_data_manager:edit_bp' %}"
+               class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-6 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                BP
+            </a>
+            
+            <a href="{% url 'health_data_manager:edit_weight' %}"
+               class="flex items-center justify-center bg-purple-500 hover:bg-purple-600 text-white font-semibold py-6 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                Weight
+            </a>
+            
+            <a href="{% url 'health_data_manager:edit_sugar' %}"
+               class="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white font-semibold py-6 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                Sugar
+            </a>
+            
+            <a href="{% url 'health_data_manager:edit_temperature' %}"
+               class="flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-semibold py-6 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                Temp
+            </a>
+            
+            <a href="{% url 'health_data_manager:edit_pulse' %}"
+               class="flex items-center justify-center bg-pink-500 hover:bg-pink-600 text-white font-semibold py-6 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                Pulse
+            </a>
+            
+            <a href="{% url 'health_data_manager:edit_exercise' %}"
+               class="flex items-center justify-center bg-orange-500 hover:bg-orange-600 text-white font-semibold py-6 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                Exercise
+            </a>
+            
+            <a href="{% url 'health_data_manager:edit_sleep' %}"
+               class="flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-6 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                Sleep
+            </a>
+            
+            <a href="{% url 'health_data_manager:edit_stress' %}"
+               class="flex items-center justify-center bg-gray-600 hover:bg-gray-700 text-white font-semibold py-6 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                Stress
+            </a>
+        </div>
+        
+        <div class="mt-8 overflow-x-auto">
+            {% block data %}
+            {% endblock data %}
+        </div>
+    </div>
+</div>
+{% endblock dashboard_body %}

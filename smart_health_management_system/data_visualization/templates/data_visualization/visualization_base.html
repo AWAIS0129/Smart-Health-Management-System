@@ -1,0 +1,111 @@
+{% extends 'dashboard/index.html' %}
+
+{% block dashboard_body %}
+  <div id="title" class="hidden">
+    {% block chart_title %}
+    {% endblock %}
+  </div>
+  <div class="min-h-[80%] flex justify-center items-center py-8">
+    <div class="w-[90%] max-w-5xl bg-white rounded-xl shadow-lg p-8 border-t-4 border-t-green-300">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+        {% block chart_header %}
+        {% endblock %}Visualization
+      </h2>
+      <canvas id="Chart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@latest"></script>
+  <script>
+
+
+    // Get data from Django context
+    const chart_data = {{chart_data|safe}}
+    console.log(chart_data)
+    
+    
+    
+    const canvas_context = document.getElementById('Chart').getContext('2d');
+    const chart_title = document.getElementById('title').innerText ;
+    const chart_color = {% block chart_color %}'rgb(9,230,97)'{% endblock chart_color%}
+    const background_color = {% block background_color %}'rgba(9,230,97,0.1)'{% endblock background_color %}
+    const chart_type = chart_data.chart_type
+    const chart_labels = chart_data.labels
+    const units = chart_data.unit
+    
+    const upper_value = chart_data.upper_value
+    
+    const lower_value = chart_data.lower_value
+    
+    
+    const lower_bounds = chart_labels.map(() => lower_value)
+    const upper_bounds=  chart_labels.map(() => upper_value)
+    
+    Chart.register(window['chartjs-plugin-annotation'])
+    
+    const chart = new Chart(canvas_context, {
+        type: chart_type,
+        data: {
+            labels: chart_labels,
+            
+            datasets: [
+            {
+                label: chart_title,
+                data: chart_data.values,
+                borderColor: chart_color,
+                backgroundColor: background_color,
+                tension: 0.1,
+                borderWidth: 2,
+                fill: true, 
+                pointRadius: 2
+            },
+            {
+                label:'Normal Range',
+                backgroundColor:'rgba(75, 192, 192, 0.5)',
+            },
+           
+                
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: chart_title + 'Over Time'
+                    },
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    },
+                    annotation:{
+                        annotations:{
+                            normalRange:
+                            {
+                                type: 'box',
+                                yMin: lower_value,
+                                yMax: upper_value,
+                                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                                borderWidth: 0,
+                                
+                            }
+                        }
+                    }
+                    
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text:units
+                        }
+                    }
+                }
+            }
+        });
+
+  
+</script>
+{% endblock %}

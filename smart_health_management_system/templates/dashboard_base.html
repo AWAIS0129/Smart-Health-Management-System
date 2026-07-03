@@ -1,0 +1,75 @@
+    <!DOCTYPE html>
+    {% load static %}
+    <html lang="en">
+    <head>
+        <link rel="stylesheet" href="{% static 'dist/styles.css' %}">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="{{ csrf_token }}">
+        <title>SHMS - {% block title %}
+            Dashboard Template
+            {% endblock title %}</title>
+    </head>
+
+
+    <body class="bg-white box-border">
+
+
+        <div class="min-h-screen w-full grid grid-rows-[auto_1fr_auto] box-border">
+
+            <header class="bg-blue-600 text-white">
+                <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
+                    
+                
+                    <div class="flex items-center space-x-4">
+    
+
+                        {% comment %} logo {% endcomment %}
+                    <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                        <span class="text-2xl">🫀</span>
+                    </div>
+                    <div>
+                            <h1 class="font-bold text-2xl">
+                                <a href="{% url 'dashboard:dashboard' %}" aria-label="Go to dashboard">Smart Health Management</a>
+                            </h1>
+                            <p class="text-sm opacity-80">AI-based health tool</p>
+                        </div>
+                    </div>
+
+                   
+                    
+                 
+                    <div class="flex items-center space-x-6 ml-4">
+                        <div>
+                            <a href="{% url "notifications:home" %}">
+                                &#128276;
+                            </a>
+                        </div>
+                        <span class="hidden sm:inline" aria-label="Logged in user">Hello, {% block username %}{{ request.user.first_name }}{% endblock %}</span>
+                        <a href="{% url 'user_accounts:logout' %}" class="text-lg hover:underline transition" aria-label="Logout">Logout</a>
+                    </div>
+
+                </div>
+            </header>
+
+
+
+            <main class="w-full flex-1 bg-gray-50 py-12" role="main">
+
+                {% block dashboard_body %}
+
+               
+                {% endblock dashboard_body %}
+
+
+            </main>
+
+            <footer class="bg-white text-center shadow py-4">
+                BC220406213 copyright Muhammad Awais
+            </footer>
+
+        </div>
+
+    </body>
+
+    </html>

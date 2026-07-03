@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+
+@layer utilities {
+	.h-4 { height: 1rem; }
+	.w-4 { width: 1rem; }
+}

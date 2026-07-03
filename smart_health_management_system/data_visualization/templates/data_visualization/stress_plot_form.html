@@ -1,0 +1,14 @@
+{% extends "data_visualization/plot_data_form_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+stress_plot_form
+{% endblock title %}
+
+{% block heading %}
+Stress
+{% endblock heading %}
+
+{% block form %}
+{{form|crispy}}
+{% endblock form %}

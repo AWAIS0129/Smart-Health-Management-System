@@ -1,0 +1,49 @@
+{% extends "health_data_manager/manual_health_data_entry.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Temperature Entry
+{% endblock title %}
+
+
+{% block form %}
+
+{{ form|crispy }}
+
+<script>
+    function updateTemperatureValidation() {
+        const unitSelect = document.getElementById('id_unit');
+        const temperatureInput = document.getElementById('id_temperature_reading_celsius');
+        
+        if(!unitSelect || !temperatureInput) return;
+        
+        const selectedUnit = unitSelect.value;
+
+        if (selectedUnit === 'C') 
+        {
+            temperatureInput.setAttribute('min', '20');
+            temperatureInput.setAttribute('max', '50');
+            temperatureInput.setAttribute('placeholder', '20-50°C');
+        } 
+        else if (selectedUnit === 'F') 
+        {
+            temperatureInput.setAttribute('min', '52');
+            temperatureInput.setAttribute('max', '120');
+            temperatureInput.setAttribute('placeholder', '52-120°F');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updateTemperatureValidation();
+        const unitSelect = document.getElementById('id_unit');
+        if(unitSelect) {
+            unitSelect.addEventListener('change', updateTemperatureValidation);
+        }
+    });
+</script>
+    
+{% endblock form %}
+
+{% block submit %}
+{% include "includes/loading_button.html" with form_id="temperature" button_text="Submit Temperature" button_color="amber" %}
+{% endblock submit %}

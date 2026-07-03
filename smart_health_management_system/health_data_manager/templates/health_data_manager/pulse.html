@@ -1,0 +1,16 @@
+{% extends "health_data_manager/manual_health_data_entry.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Pulse Entry
+{% endblock title %}
+
+{% block form %}
+
+{{ form|crispy }}
+    
+{% endblock form %}
+
+{% block submit %}
+{% include "includes/loading_button.html" with form_id="pulse" button_text="Submit Pulse" button_color="pink" %}
+{% endblock submit %}

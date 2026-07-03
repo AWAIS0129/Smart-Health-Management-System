@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.0",
+    "chart.js": "^4.5.1",
+    "chartjs-plugin-annotation": "^3.1.0",
+    "tailwindcss": "^4.2.0"
+  },
+  "scripts": {
+    "build:css": "npx @tailwindcss/cli -i ./smart_health_management_system/static/src/styles.css -o ./smart_health_management_system/static/dist/styles.css",
+    "watch:css": "npx @tailwindcss/cli -i ./smart_health_management_system/static/src/styles.css -o ./smart_health_management_system/static/dist/styles.css --watch --poll"
+  }
+}

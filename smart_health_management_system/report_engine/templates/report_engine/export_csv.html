@@ -1,0 +1,199 @@
+    {% extends "dashboard/index.html" %}
+    {% load crispy_forms_tags %}
+
+    {% block title %}
+    Generate Health Report
+    {% endblock title %}
+
+    {% block dashboard_body %}
+
+    <div class="min-h-[80%] flex justify-center items-center py-8">
+        <div class="w-[90%] max-w-4xl bg-white rounded-xl shadow-lg p-8 border-t-4 border-t-green-300">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2 text-center">Export CSV Report</h2>
+            <p class="text-gray-600 text-center mb-8">Select the metrics you want to include and date range for your report</p>
+            
+            {% include "includes/messages.html" %}
+
+            <form method="post" id="report_form" novalidate>
+                {% include "includes/csrf_token.html" %}
+                
+                <div class="bg-gray-50 rounded-lg p-6 border border-gray-200">
+                    <!-- Date Range Section -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500">📅 Date Range</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Start Date -->
+                            <div>
+                                <label for="{{ form.start_date.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    Start Date <span class="text-red-500">*</span>
+                                </label>
+                                {{ form.start_date }}
+                                {% if form.start_date.errors %}
+                                    <p class="text-red-500 text-sm mt-1">{{ form.start_date.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+
+                            <!-- End Date -->
+                            <div>
+                                <label for="{{ form.end_date.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+                                    End Date <span class="text-red-500">*</span>
+                                </label>
+                                {{ form.end_date }}
+                                {% if form.end_date.errors %}
+                                    <p class="text-red-500 text-sm mt-1">{{ form.end_date.errors.0 }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Selection Section -->
+                    <div class="mb-8">
+                        <h3 class="text-lg font-bold text-gray-800 mb-4 pb-2 border-b-2 border-green-500">✓ Select Metrics</h3>
+                        <p class="text-gray-600 text-sm mb-4">Choose at least one metric to include in your report:</p>
+                        
+
+
+                        <!-- Blood Pressure -->
+                        <div class="mb-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-red-400 transition">
+                            <div class="flex items-start">
+                                {{ form.include_blood_pressure }}
+                                <label for="{{ form.include_blood_pressure.id_for_label }}" class="ml-3 cursor-pointer flex-1">
+                                    <span class="text-gray-800 font-semibold">Blood Pressure</span>
+                                    <p class="text-sm text-gray-600">Systolic and diastolic readings with status assessment</p>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Blood Sugar -->
+                        <div class="mb-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-orange-400 transition">
+                            <div class="flex items-start">
+                                {{ form.include_blood_sugar }}
+                                <label for="{{ form.include_blood_sugar.id_for_label }}" class="ml-3 cursor-pointer flex-1">
+                                    <span class="text-gray-800 font-semibold">Blood Sugar</span>
+                                    <p class="text-sm text-gray-600">Fasting and random blood glucose levels</p>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Weight -->
+                        <div class="mb-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-blue-400 transition">
+                            <div class="flex items-start">
+                                {{ form.include_weight }}
+                                <label for="{{ form.include_weight.id_for_label }}" class="ml-3 cursor-pointer flex-1">
+                                    <span class="text-gray-800 font-semibold">Weight</span>
+                                    <p class="text-sm text-gray-600">Weight tracking and trends</p>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Temperature -->
+                        <div class="mb-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-yellow-400 transition">
+                            <div class="flex items-start">
+                                {{ form.include_temperature }}
+                                <label for="{{ form.include_temperature.id_for_label }}" class="ml-3 cursor-pointer flex-1">
+                                    <span class="text-gray-800 font-semibold">Temperature</span>
+                                    <p class="text-sm text-gray-600">Body temperature records</p>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Pulse -->
+                        <div class="mb-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-pink-400 transition">
+                            <div class="flex items-start">
+                                {{ form.include_pulse }}
+                                <label for="{{ form.include_pulse.id_for_label }}" class="ml-3 cursor-pointer flex-1">
+                                    <span class="text-gray-800 font-semibold">Pulse/Heart Rate</span>
+                                    <p class="text-sm text-gray-600">Heart rate readings with status</p>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Exercise -->
+                        <div class="mb-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-green-400 transition">
+                            <div class="flex items-start">
+                                {{ form.include_exercise }}
+                                <label for="{{ form.include_exercise.id_for_label }}" class="ml-3 cursor-pointer flex-1">
+                                    <span class="text-gray-800 font-semibold">Exercise Duration</span>
+                                    <p class="text-sm text-gray-600">Physical activity records and types</p>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Sleep -->
+                        <div class="mb-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-indigo-400 transition">
+                            <div class="flex items-start">
+                                {{ form.include_sleep }}
+                                <label for="{{ form.include_sleep.id_for_label }}" class="ml-3 cursor-pointer flex-1">
+                                    <span class="text-gray-800 font-semibold">Sleep Duration</span>
+                                    <p class="text-sm text-gray-600">Sleep hours and quality assessment</p>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Stress -->
+                        <div class="mb-4 p-4 bg-white rounded-lg border border-gray-200 hover:border-red-400 transition">
+                            <div class="flex items-start">
+                                {{ form.include_stress }}
+                                <label for="{{ form.include_stress.id_for_label }}" class="ml-3 cursor-pointer flex-1">
+                                    <span class="text-gray-800 font-semibold">Stress Level</span>
+                                    <p class="text-sm text-gray-600">Daily stress levels and trends</p>
+                                </label>
+                            </div>
+                        </div>
+
+                        {% if form.non_field_errors %}
+                            <div class="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+                                {{ form.non_field_errors.0 }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="flex gap-4">
+                        <button type="submit" id="report_form-submit" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                            <span class="button-text">📥 Generate & Export CSV</span>
+                            <span class="button-loader hidden">
+                                <span class="inline-block animate-spin">⟳</span> Generating...
+                            </span>
+                        </button>
+                        <a href="{% url 'report_engine:home' %}" class="flex items-center justify-center bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg">
+                            Cancel
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    // Style date inputs
+    const dateInputs = document.querySelectorAll('input[type="date"]');
+    dateInputs.forEach(input => {
+        input.style.width = '100%';
+        input.className = 'w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500';
+    });
+
+    // Loading button handler
+    document.getElementById('report_form-submit').addEventListener('click', function(e) {
+        const btn = this;
+        const textSpan = btn.querySelector('.button-text');
+        const loaderSpan = btn.querySelector('.button-loader');
+        
+        btn.disabled = true;
+        btn.setAttribute('aria-busy', 'true');
+        textSpan.classList.add('hidden');
+        loaderSpan.classList.remove('hidden');
+        
+        const form = btn.closest('form');
+        if (form) {
+          form.submit()
+
+          setTimeout(()=>{
+            window.location.reload(),
+            0
+          })
+    });
+    </script>
+
+    {% endblock dashboard_body %}

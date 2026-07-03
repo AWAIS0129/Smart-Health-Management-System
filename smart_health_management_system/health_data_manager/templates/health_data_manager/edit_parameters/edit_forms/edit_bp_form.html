@@ -1,0 +1,30 @@
+        {% extends 'health_data_manager/edit_parameters/edit_forms/edit_form_base.html' %}
+        {% load crispy_forms_tags %}
+
+        {% block title %}
+        Edit_BP
+        {% endblock title %}
+
+        {% block heading %}
+        BP
+        {% endblock heading %}
+
+        {% block form %}
+
+        {{form|crispy}}
+
+
+        <div class="flex gap-4 mt-6">
+            <button type="submit" 
+                    class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200">
+                Update Blood Pressure
+            </button>
+            
+            <a href="{% url 'health_data_manager:edit_bp' %}" 
+            class="flex-1 text-center bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200">
+                Cancel
+            </a>
+        </div>
+        {% endblock form%}
+        {% block submit %}
+        {% endblock submit %}
